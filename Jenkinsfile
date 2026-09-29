@@ -1,10 +1,11 @@
+```groovy
 pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USER = 'ashishpokale2207'
-        FRONTEND_IMAGE = "${DOCKERHUB_USER}/meesho-frontend"
-        BACKEND_IMAGE  = "${DOCKERHUB_USER}/meesho-backend"
+        DOCKERHUB_USERNAME = 'ashishpokale2207'
+        FRONTEND_IMAGE = 'ashishpokale2207/meesho-frontend:latest'
+        BACKEND_IMAGE = 'ashishpokale2207/meesho-backend:latest'
     }
 
     stages {
@@ -15,34 +16,44 @@ pipeline {
             }
         }
 
+        stage('Verify Frontend Files') {
+            steps {
+                sh '''
+                    echo "===== App.jsx ====="
+                    tail -10 frontend/src/App.jsx
+
+                    echo "===== main.jsx ====="
+                    cat frontend/src/main.jsx
+                '''
+            }
+        }
+
         stage('Build Frontend Image') {
             steps {
-                sh 'docker build -t $FRONTEND_IMAGE:latest ./frontend'
+                sh '''
+                    docker build \
+                    -t $FRONTEND_IMAGE \
+                    ./frontend
+                '''
             }
         }
 
         stage('Build Backend Image') {
             steps {
-                sh 'docker build -t $BACKEND_IMAGE:latest ./backend'
+                sh '''
+                    docker build \
+                    -t $BACKEND_IMAGE \
+                    ./backend
+                '''
             }
         }
 
         stage('Push Docker Images') {
             steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'dockerhub-credentials',
-                        usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_PASS'
-                    )
-                ]) {
-                    sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker push $FRONTEND_IMAGE:latest
-                        docker push $BACKEND_IMAGE:latest
-                        docker logout
-                    '''
-                }
+                sh '''
+                    docker push $FRONTEND_IMAGE
+                    docker push $BACKEND_IMAGE
+                '''
             }
         }
     }
@@ -57,3 +68,4 @@ pipeline {
         }
     }
 }
+```
