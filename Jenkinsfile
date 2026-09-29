@@ -1,4 +1,3 @@
-```groovy
 pipeline {
     agent any
 
@@ -31,9 +30,7 @@ pipeline {
         stage('Build Frontend Image') {
             steps {
                 sh '''
-                    docker build \
-                    -t $FRONTEND_IMAGE \
-                    ./frontend
+                    docker build -t $FRONTEND_IMAGE ./frontend
                 '''
             }
         }
@@ -41,9 +38,7 @@ pipeline {
         stage('Build Backend Image') {
             steps {
                 sh '''
-                    docker build \
-                    -t $BACKEND_IMAGE \
-                    ./backend
+                    docker build -t $BACKEND_IMAGE ./backend
                 '''
             }
         }
@@ -68,4 +63,3 @@ pipeline {
         }
     }
 }
-```
