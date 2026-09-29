@@ -1,3 +1,4 @@
+```jsx
 import { useEffect, useState } from "react";
 import "./App.css";
 
@@ -6,7 +7,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch("/api/products")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -20,7 +21,6 @@ function App() {
 
   return (
     <div className="app">
-
       <header className="header">
         <div className="logo">meesho</div>
 
@@ -50,9 +50,11 @@ function App() {
 
       <section className="hero">
         <h1>Everything You Love, At Amazing Prices</h1>
+
         <p>
           Discover fashion, electronics, home products and more.
         </p>
+
         <button>Shop Now</button>
       </section>
 
@@ -63,13 +65,9 @@ function App() {
           <p>Loading products...</p>
         ) : (
           <div className="products">
-
             {products.map((product) => (
               <div className="product-card" key={product.id}>
-
-                <div className="product-image">
-                  🛍️
-                </div>
+                <div className="product-image">🛍️</div>
 
                 <h3>{product.name}</h3>
 
@@ -84,17 +82,14 @@ function App() {
                 <button className="cart-button">
                   Add to Cart
                 </button>
-
               </div>
             ))}
-
           </div>
         )}
-
       </section>
-
     </div>
   );
 }
 
 export default App;
+```
