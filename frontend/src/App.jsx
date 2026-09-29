@@ -1,4 +1,3 @@
-```jsx
 import { useEffect, useState } from "react";
 import "./App.css";
 
@@ -71,17 +70,11 @@ function App() {
 
                 <h3>{product.name}</h3>
 
-                <p className="category">
-                  {product.category}
-                </p>
+                <p className="category">{product.category}</p>
 
-                <p className="price">
-                  ₹{product.price}
-                </p>
+                <p className="price">₹{product.price}</p>
 
-                <button className="cart-button">
-                  Add to Cart
-                </button>
+                <button className="cart-button">Add to Cart</button>
               </div>
             ))}
           </div>
@@ -92,4 +85,3 @@ function App() {
 }
 
 export default App;
-```
