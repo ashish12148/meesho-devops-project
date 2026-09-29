@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meesho-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: meesho-frontend
+  template:
+    metadata:
+      labels:
+        app: meesho-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ashishpokale2207/meesho-frontend:latest
+          ports:
+            - containerPort: 80
